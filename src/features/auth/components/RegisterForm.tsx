@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Link, useNavigate } from 'react-router-dom'
-import { Loader2, Mail, Lock, ShieldCheck, LogIn, Sparkles } from 'lucide-react'
+import { Loader2, Mail, Lock, ShieldCheck, LogIn, Sparkles, Eye, EyeOff } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/form'
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
 import { useAuth } from '@/features/auth/hooks/use-auth'
+import { translateAuthError } from '@/lib/translate-errors'
 
 const formSchema = z.object({
   email: z.string().trim().email({ message: "Endereço de email inválido" }),
@@ -29,6 +30,8 @@ const formSchema = z.object({
 
 export function RegisterForm() {
     const [error, setError] = useState<string | null>(null)
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const { signUp, loading } = useAuth()
     const navigate = useNavigate()
 
@@ -45,7 +48,7 @@ export function RegisterForm() {
       setError(null)
       const { error } = await signUp(values.email, values.password)
       if (error) {
-        setError(error.message)
+        setError(translateAuthError(error.message))
       } else {
         navigate('/dashboard')
       }
@@ -100,11 +103,22 @@ export function RegisterForm() {
                       <FormControl>
                           <div className="relative">
                             <Input 
-                              type="password" 
+                              type={showPassword ? "text" : "password"}
                               placeholder="Mínimo 6 caracteres" 
-                              className="h-12 pl-4 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all" 
+                              className="h-12 pl-4 pr-12 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all" 
                               {...field} 
                             />
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword(!showPassword)}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              {showPassword ? (
+                                <EyeOff className="h-4 w-4" />
+                              ) : (
+                                <Eye className="h-4 w-4" />
+                              )}
+                            </button>
                           </div>
                       </FormControl>
                       <FormMessage />
@@ -123,11 +137,22 @@ export function RegisterForm() {
                       <FormControl>
                           <div className="relative">
                             <Input 
-                              type="password" 
+                              type={showConfirmPassword ? "text" : "password"}
                               placeholder="Digite a senha novamente" 
-                              className="h-12 pl-4 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all" 
+                              className="h-12 pl-4 pr-12 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all" 
                               {...field} 
                             />
+                            <button
+                              type="button"
+                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              {showConfirmPassword ? (
+                                <EyeOff className="h-4 w-4" />
+                              ) : (
+                                <Eye className="h-4 w-4" />
+                              )}
+                            </button>
                           </div>
                       </FormControl>
                       <FormMessage />

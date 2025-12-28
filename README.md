@@ -246,6 +246,8 @@ npm run lint      # Executa ESLint
 #### Transações
 
 - [x] **Tabela interativa** com TanStack Table
+- [x] **Paginação inteligente** (8 transações por página para manter layout consistente)
+- [x] **Controles de navegação** modernos com números de página
 - [x] **Efeitos de hover dinâmicos** (verde para receitas, vermelho para despesas)
 - [x] **Adicionar transações** via modal estilizado com gradiente
 - [x] **Editar transações** clicando na linha da tabela
@@ -263,11 +265,22 @@ npm run lint      # Executa ESLint
 - [x] **Design responsivo** (Mobile-first)
 - [x] **Botão de fechar (X)** estilizado nos modais
 - [x] **Animações suaves** e transições
+- [x] **Footer fixo** alinhado com a sidebar ("Desenvolvido por Rodrigo Cinelli")
+- [x] **Espaçamento vertical consistente** (32px) entre header/conteúdo e conteúdo/footer
+
+#### Perfil do Usuário
+
+- [x] **Página de perfil** com informações pessoais e segurança
+- [x] **Upload de avatar** com preview e feedback visual
+- [x] **Avatar dinâmico** refletido no header em tempo real
+- [x] **Alteração de senha** com validação
+- [x] **Cards centralizados** verticalmente
 
 #### Internacionalização
 
 - [x] **Interface 100% em PT-BR**
 - [x] **Mensagens de validação** traduzidas
+- [x] **Erros de autenticação** traduzidos (Supabase Auth)
 - [x] **Formatação de moeda e data** brasileira
 
 ### 🚧 Roadmap
@@ -323,7 +336,7 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 👤 Autor
 
-Desenvolvido com 💚 por **[Seu Nome]**
+Desenvolvido com 💚 por **Rodrigo Cinelli**
 
 ---
 

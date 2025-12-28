@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Link, useNavigate } from 'react-router-dom'
-import { Loader2, Mail, Lock, ArrowRight, UserPlus } from 'lucide-react'
+import { Loader2, Mail, Lock, ArrowRight, UserPlus, KeyRound, Eye, EyeOff } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -17,6 +17,8 @@ import {
 } from '@/components/ui/form'
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
 import { useAuth } from '@/features/auth/hooks/use-auth'
+import { translateAuthError } from '@/lib/translate-errors'
+import { getLastUsedEmail, saveLastUsedEmail } from '@/lib/auth-storage'
 
 const formSchema = z.object({
   email: z.string().trim().email({ message: "Endereço de email inválido" }),
@@ -25,13 +27,17 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const [error, setError] = useState<string | null>(null)
+  const [showPassword, setShowPassword] = useState(false)
   const { signInWithPassword, loading } = useAuth()
   const navigate = useNavigate()
+
+  // Get last used email from storage
+  const lastEmail = getLastUsedEmail()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      email: lastEmail || "",
       password: "",
     },
   })
@@ -40,8 +46,10 @@ export function LoginForm() {
     setError(null)
     const { error } = await signInWithPassword(values.email, values.password)
     if (error) {
-      setError(error.message)
+      setError(translateAuthError(error.message))
     } else {
+      // Save email for future use
+      saveLastUsedEmail(values.email)
       navigate('/dashboard')
     }
   }
@@ -88,18 +96,37 @@ export function LoginForm() {
                 name="password"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel className="text-sm font-medium flex items-center gap-2">
-                      <Lock className="h-4 w-4 text-emerald-600" />
-                      Senha
-                    </FormLabel>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="text-sm font-medium flex items-center gap-2">
+                        <Lock className="h-4 w-4 text-emerald-600" />
+                        Senha
+                      </FormLabel>
+                      <Link 
+                        to="/auth/forgot-password" 
+                        className="text-xs font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
+                      >
+                        Esqueceu sua senha?
+                      </Link>
+                    </div>
                     <FormControl>
                         <div className="relative">
                           <Input 
-                            type="password" 
+                            type={showPassword ? "text" : "password"}
                             placeholder="••••••••" 
-                            className="h-12 pl-4 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all" 
+                            className="h-12 pl-4 pr-12 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all" 
                             {...field} 
                           />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
+                          </button>
                         </div>
                     </FormControl>
                     <FormMessage />
@@ -127,6 +154,17 @@ export function LoginForm() {
                     </>
                   )}
                 </Button>
+
+                {/* Forgot Password Link for Mobile */}
+                <div className="flex justify-center sm:hidden">
+                  <Link 
+                    to="/auth/forgot-password" 
+                    className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors flex items-center gap-1"
+                  >
+                    <KeyRound className="h-3 w-3" />
+                    Recuperar acesso
+                  </Link>
+                </div>
 
                 {/* Divider Section - mais espaçamento */}
                 <div className="relative py-6">
@@ -156,4 +194,3 @@ export function LoginForm() {
     </Card>
   )
 }
-
