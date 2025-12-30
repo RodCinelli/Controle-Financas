@@ -5,24 +5,25 @@ import * as z from 'zod'
 import { format } from "date-fns"
 import { CalendarIcon, Loader2, Plus, FileText, Tag, DollarSign, ArrowUpCircle, ArrowDownCircle } from "lucide-react"
 import { NumericFormat } from 'react-number-format'
+import { toast } from 'sonner'
 
 import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from "@/components/ui/dialog"
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
@@ -46,13 +47,13 @@ import { addTransaction } from "@/features/transactions/api"
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 
 const formSchema = z.object({
-  description: z.string().min(2, "A descrição deve ter pelo menos 2 caracteres"),
-  amount: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-      message: "O valor deve ser positivo",
-  }),
-  type: z.enum(["income", "expense"]),
-  category: z.string().min(2, "A categoria é obrigatória"),
-  date: z.date(),
+    description: z.string().min(2, "A descrição deve ter pelo menos 2 caracteres"),
+    amount: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+        message: "O valor deve ser positivo",
+    }),
+    type: z.enum(["income", "expense"]),
+    category: z.string().min(2, "A categoria é obrigatória"),
+    date: z.date(),
 })
 
 export function AddTransactionModal() {
@@ -74,7 +75,7 @@ export function AddTransactionModal() {
     const mutation = useMutation({
         mutationFn: async (values: z.infer<typeof formSchema>) => {
             if (!user) throw new Error("Usuário não autenticado")
-            
+
             return await addTransaction({
                 description: values.description,
                 amount: Number(values.amount),
@@ -88,9 +89,27 @@ export function AddTransactionModal() {
             })
         },
         onSuccess: () => {
-             queryClient.invalidateQueries({ queryKey: ['transactions'] })
-             setOpen(false)
-             form.reset()
+            queryClient.invalidateQueries({ queryKey: ['transactions'] })
+            setOpen(false)
+            form.reset()
+            toast.success('Transação adicionada!', {
+                description: 'Sua nova transação foi registrada com sucesso.',
+                style: {
+                    background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                    border: 'none',
+                    color: 'white',
+                },
+            })
+        },
+        onError: (error) => {
+            toast.error('Erro ao adicionar transação', {
+                description: error instanceof Error ? error.message : 'Tente novamente mais tarde.',
+                style: {
+                    background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                    border: 'none',
+                    color: 'white',
+                },
+            })
         },
     })
 
@@ -123,159 +142,159 @@ export function AddTransactionModal() {
                     </DialogHeader>
                 </div>
                 <div className="p-6">
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                        <FormField
-                            control={form.control}
-                            name="description"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="flex items-center gap-2 text-sm font-medium">
-                                        <FileText className="h-4 w-4 text-muted-foreground" />
-                                        Descrição
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Ex: Compras no mercado, Salário mensal..." className="h-11" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                         <div className="grid grid-cols-2 gap-4">
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                             <FormField
                                 control={form.control}
-                                name="amount"
+                                name="description"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="flex items-center gap-2 text-sm font-medium">
-                                            <DollarSign className="h-4 w-4 text-muted-foreground" />
-                                            Valor
+                                            <FileText className="h-4 w-4 text-muted-foreground" />
+                                            Descrição
                                         </FormLabel>
                                         <FormControl>
-                                             <NumericFormat
-                                                customInput={Input}
-                                                thousandSeparator="."
-                                                decimalSeparator=","
-                                                prefix="R$ "
-                                                placeholder="R$ 0,00"
-                                                className="h-11"
-                                                onValueChange={(values) => {
-                                                    field.onChange(values.value)
-                                                }}
-                                                value={field.value}
-                                            />
+                                            <Input placeholder="Ex: Compras no mercado, Salário mensal..." className="h-11" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                             <FormField
+                            <div className="grid grid-cols-2 gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name="amount"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="flex items-center gap-2 text-sm font-medium">
+                                                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                                                Valor
+                                            </FormLabel>
+                                            <FormControl>
+                                                <NumericFormat
+                                                    customInput={Input}
+                                                    thousandSeparator="."
+                                                    decimalSeparator=","
+                                                    prefix="R$ "
+                                                    placeholder="R$ 0,00"
+                                                    className="h-11"
+                                                    onValueChange={(values) => {
+                                                        field.onChange(values.value)
+                                                    }}
+                                                    value={field.value}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="type"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="flex items-center gap-2 text-sm font-medium">
+                                                {field.value === 'income' ? (
+                                                    <ArrowUpCircle className="h-4 w-4 text-emerald-600" />
+                                                ) : (
+                                                    <ArrowDownCircle className="h-4 w-4 text-red-500" />
+                                                )}
+                                                Tipo
+                                            </FormLabel>
+                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <FormControl>
+                                                    <SelectTrigger className="h-11">
+                                                        <SelectValue placeholder="Selecione o tipo" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    <SelectItem value="income">
+                                                        <span className="flex items-center gap-2">
+                                                            <ArrowUpCircle className="h-4 w-4 text-emerald-600" />
+                                                            Receita
+                                                        </span>
+                                                    </SelectItem>
+                                                    <SelectItem value="expense">
+                                                        <span className="flex items-center gap-2">
+                                                            <ArrowDownCircle className="h-4 w-4 text-red-500" />
+                                                            Despesa
+                                                        </span>
+                                                    </SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+
+                            <FormField
                                 control={form.control}
-                                name="type"
+                                name="category"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="flex items-center gap-2 text-sm font-medium">
-                                            {field.value === 'income' ? (
-                                                <ArrowUpCircle className="h-4 w-4 text-emerald-600" />
-                                            ) : (
-                                                <ArrowDownCircle className="h-4 w-4 text-red-500" />
-                                            )}
-                                            Tipo
+                                            <Tag className="h-4 w-4 text-muted-foreground" />
+                                            Categoria
                                         </FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                                <SelectTrigger className="h-11">
-                                                    <SelectValue placeholder="Selecione o tipo" />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                <SelectItem value="income">
-                                                    <span className="flex items-center gap-2">
-                                                        <ArrowUpCircle className="h-4 w-4 text-emerald-600" />
-                                                        Receita
-                                                    </span>
-                                                </SelectItem>
-                                                <SelectItem value="expense">
-                                                    <span className="flex items-center gap-2">
-                                                        <ArrowDownCircle className="h-4 w-4 text-red-500" />
-                                                        Despesa
-                                                    </span>
-                                                </SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                        <FormControl>
+                                            <Input placeholder="Ex: Alimentação, Transporte, Lazer..." className="h-11" {...field} />
+                                        </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                         </div>
-                         
-                         <FormField
-                            control={form.control}
-                            name="category"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="flex items-center gap-2 text-sm font-medium">
-                                        <Tag className="h-4 w-4 text-muted-foreground" />
-                                        Categoria
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Ex: Alimentação, Transporte, Lazer..." className="h-11" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
 
-                        <FormField
-                            control={form.control}
-                            name="date"
-                            render={({ field }) => (
-                                <FormItem className="flex flex-col">
-                                    <FormLabel>Data</FormLabel>
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <FormControl>
-                                                <Button
-                                                    variant={"outline"}
-                                                    className={cn(
-                                                        "w-full pl-3 text-left font-normal",
-                                                        !field.value && "text-muted-foreground"
-                                                    )}
-                                                >
-                                                    {field.value ? (
-                                                        format(field.value, "dd/MM/yyyy")
-                                                    ) : (
-                                                        <span>Selecione uma data</span>
-                                                    )}
-                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                                </Button>
-                                            </FormControl>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar
-                                                mode="single"
-                                                selected={field.value}
-                                                onSelect={field.onChange}
-                                                disabled={(date) =>
-                                                    date > new Date() || date < new Date("1900-01-01")
-                                                }
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                            <FormField
+                                control={form.control}
+                                name="date"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col">
+                                        <FormLabel>Data</FormLabel>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button
+                                                        variant={"outline"}
+                                                        className={cn(
+                                                            "w-full pl-3 text-left font-normal",
+                                                            !field.value && "text-muted-foreground"
+                                                        )}
+                                                    >
+                                                        {field.value ? (
+                                                            format(field.value, "dd/MM/yyyy")
+                                                        ) : (
+                                                            <span>Selecione uma data</span>
+                                                        )}
+                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0" align="start">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={field.value}
+                                                    onSelect={field.onChange}
+                                                    disabled={(date) =>
+                                                        date > new Date() || date < new Date("1900-01-01")
+                                                    }
+                                                    initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
-                        <DialogFooter className="pt-4 border-t">
-                            <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 shadow-md">
-                                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                Salvar Transação
-                            </Button>
-                        </DialogFooter>
-                    </form>
-                </Form>
+                            <DialogFooter className="pt-4 border-t">
+                                <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 shadow-md">
+                                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                    Salvar Transação
+                                </Button>
+                            </DialogFooter>
+                        </form>
+                    </Form>
                 </div>
             </DialogContent>
         </Dialog>

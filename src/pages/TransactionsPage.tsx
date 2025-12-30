@@ -4,7 +4,7 @@ import { fetchTransactions } from "@/features/transactions/api"
 import { DataTable } from "@/features/transactions/components/data-table"
 import { columns } from "@/features/transactions/components/columns"
 import { AddTransactionModal } from "@/features/transactions/components/add-transaction-modal"
-import { Loader2, Tag, X } from "lucide-react"
+import { Loader2, Tag } from "lucide-react"
 import {
     Select,
     SelectContent,
@@ -57,21 +57,21 @@ export function TransactionsPage() {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <div>
-                     <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">Transações</h2>
-                     <p className="text-muted-foreground mt-1">Gerencie suas receitas e despesas</p>
+                    <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">Transações</h2>
+                    <p className="text-muted-foreground mt-1">Gerencie suas receitas e despesas</p>
                 </div>
                 <AddTransactionModal />
             </div>
-            
+
             {/* Category Filter */}
             <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">
-                    <Tag className="h-4 w-4 text-muted-foreground" />
+                    <Tag className="h-4 w-4 text-emerald-600" />
                     <span className="text-sm font-medium text-muted-foreground">Filtrar por categoria:</span>
                 </div>
-                <div className="flex items-center gap-2">
-                    <Select 
-                        value={currentCategoryFilter || 'all'} 
+                <div className="flex items-center gap-4">
+                    <Select
+                        value={currentCategoryFilter || 'all'}
                         onValueChange={handleCategoryChange}
                     >
                         <SelectTrigger className="w-[200px] h-9 bg-white dark:bg-background border-2 focus:ring-emerald-500 focus:border-emerald-500">
@@ -91,27 +91,26 @@ export function TransactionsPage() {
                         </SelectContent>
                     </Select>
                     {currentCategoryFilter && (
-                        <Button 
-                            variant="ghost" 
+                        <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
+                            Mostrando: {currentCategoryFilter}
+                        </span>
+                    )}
+
+                    {currentCategoryFilter && (
+                        <Button
                             size="sm"
+                            className="h-9 px-3 bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm border-2 border-sky-600"
                             onClick={clearCategoryFilter}
-                            className="h-9 px-2 text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-950/30"
                         >
-                            <X className="h-4 w-4" />
-                            <span className="sr-only">Limpar filtro</span>
+                            Limpar Filtro
                         </Button>
                     )}
                 </div>
-                {currentCategoryFilter && (
-                    <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
-                        Mostrando: {currentCategoryFilter}
-                    </span>
-                )}
             </div>
 
-            <DataTable 
-                columns={columns} 
-                data={transactions || []} 
+            <DataTable
+                columns={columns}
+                data={transactions || []}
                 columnFilters={columnFilters}
                 onColumnFiltersChange={setColumnFilters}
             />

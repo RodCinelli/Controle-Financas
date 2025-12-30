@@ -88,76 +88,81 @@ export function DateRangeFilter({ onFilterChange }: DateRangeFilterProps) {
     const isFiltered = filterType !== 'all'
 
     return (
-        <div className="inline-flex items-center gap-3 bg-muted/30 rounded-lg px-3 py-2 border">
+        <div className="flex items-center gap-3">
             {/* Ícone e Label */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-emerald-600" />
                 <span className="text-sm font-medium text-muted-foreground">
-                    Período:
+                    Filtrar por período:
                 </span>
             </div>
 
-            {/* Seletor de Tipo de Filtro */}
-            <Select value={filterType} onValueChange={handleFilterTypeChange}>
-                <SelectTrigger className="w-auto min-w-[145px] h-8 text-sm bg-background border focus:ring-emerald-500 focus:border-emerald-500">
-                    <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="all">Todo o período</SelectItem>
-                    <SelectItem value="month">Por mês</SelectItem>
-                </SelectContent>
-            </Select>
+            {/* Filtros */}
+            <div className="flex items-center gap-2">
+                {/* Seletor de Tipo de Filtro */}
+                <Select value={filterType} onValueChange={handleFilterTypeChange}>
+                    <SelectTrigger className="w-[200px] h-9 text-sm bg-white dark:bg-background border-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">
+                            <span className="text-muted-foreground">Todo o período</span>
+                        </SelectItem>
+                        <SelectItem value="month">Por mês</SelectItem>
+                    </SelectContent>
+                </Select>
 
-            {/* Seletor de Mês (aparece quando filterType === 'month') */}
-            {filterType === 'month' && (
-                <div className="flex items-center gap-1">
+                {/* Seletor de Mês (aparece quando filterType === 'month') */}
+                {filterType === 'month' && (
+                    <div className="flex items-center gap-1">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9"
+                            onClick={() => navigateMonth('prev')}
+                        >
+                            <ChevronLeft className="h-4 w-4" />
+                        </Button>
+
+                        <Select
+                            value={format(selectedMonth, 'yyyy-MM')}
+                            onValueChange={handleMonthChange}
+                        >
+                            <SelectTrigger className="w-[200px] h-9 text-sm bg-white dark:bg-background border-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {monthOptions.map((month) => (
+                                    <SelectItem key={month.value} value={month.value}>
+                                        <span className="capitalize">{month.label}</span>
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9"
+                            onClick={() => navigateMonth('next')}
+                            disabled={format(selectedMonth, 'yyyy-MM') === format(new Date(), 'yyyy-MM')}
+                        >
+                            <ChevronRight className="h-4 w-4" />
+                        </Button>
+                    </div>
+                )}
+
+                {/* Botão Limpar Filtro */}
+                {isFiltered && (
                     <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8"
-                        onClick={() => navigateMonth('prev')}
+                        size="sm"
+                        className="h-9 px-3 bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm border-2 border-sky-600"
+                        onClick={handleClear}
                     >
-                        <ChevronLeft className="h-4 w-4" />
+                        Limpar Filtro
                     </Button>
-
-                    <Select
-                        value={format(selectedMonth, 'yyyy-MM')}
-                        onValueChange={handleMonthChange}
-                    >
-                        <SelectTrigger className="w-auto min-w-[150px] h-8 text-sm bg-background border focus:ring-emerald-500 focus:border-emerald-500">
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {monthOptions.map((month) => (
-                                <SelectItem key={month.value} value={month.value}>
-                                    <span className="capitalize">{month.label}</span>
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8"
-                        onClick={() => navigateMonth('next')}
-                        disabled={format(selectedMonth, 'yyyy-MM') === format(new Date(), 'yyyy-MM')}
-                    >
-                        <ChevronRight className="h-4 w-4" />
-                    </Button>
-                </div>
-            )}
-
-            {/* Botão Limpar Filtro */}
-            {isFiltered && (
-                <Button
-                    size="sm"
-                    className="h-8 px-3 bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm"
-                    onClick={handleClear}
-                >
-                    Limpar Filtro
-                </Button>
-            )}
+                )}
+            </div>
         </div>
     )
 }

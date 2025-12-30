@@ -3,6 +3,7 @@
 import { useState } from "react"
 import type { Transaction } from "../types"
 import { Trash2, AlertTriangle, X } from "lucide-react"
+import { toast } from 'sonner'
 import { Button } from "@/components/ui/button"
 import {
   AlertDialog,
@@ -21,15 +22,31 @@ import { queryClient } from "@/lib/react-query"
 export function DeleteTransactionButton({ transaction }: { transaction: Transaction }) {
   const [isDeleting, setIsDeleting] = useState(false)
   const [open, setOpen] = useState(false)
-  
+
   const handleDelete = async () => {
     setIsDeleting(true)
     try {
       await deleteTransaction(transaction.id)
       queryClient.invalidateQueries({ queryKey: ['transactions'] })
       setOpen(false)
+      toast.success('Transação excluída!', {
+        description: `"${transaction.description}" foi removida com sucesso.`,
+        style: {
+          background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+          border: 'none',
+          color: 'white',
+        },
+      })
     } catch (error) {
       console.error("Falha ao excluir", error)
+      toast.error('Erro ao excluir transação', {
+        description: error instanceof Error ? error.message : 'Tente novamente mais tarde.',
+        style: {
+          background: 'linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%)',
+          border: 'none',
+          color: 'white',
+        },
+      })
     } finally {
       setIsDeleting(false)
     }
@@ -38,8 +55,8 @@ export function DeleteTransactionButton({ transaction }: { transaction: Transact
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           size="icon"
           className="h-8 w-8 text-muted-foreground hover:text-white hover:bg-red-600 dark:hover:bg-red-600 transition-all"
         >
@@ -71,7 +88,7 @@ export function DeleteTransactionButton({ transaction }: { transaction: Transact
             </div>
           </AlertDialogHeader>
         </div>
-        
+
         {/* Content */}
         <div className="p-6">
           <div className="p-4 rounded-xl bg-muted/50 border-2 border-dashed">
@@ -80,11 +97,10 @@ export function DeleteTransactionButton({ transaction }: { transaction: Transact
             </p>
             <p className="font-semibold text-lg">{transaction.description}</p>
             <div className="flex items-center gap-2 mt-2">
-              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                transaction.type === 'income' 
-                  ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400' 
-                  : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-              }`}>
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${transaction.type === 'income'
+                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400'
+                : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                }`}>
                 {transaction.type === 'income' ? 'Receita' : 'Despesa'}
               </span>
               <span className={`font-bold ${transaction.type === 'income' ? 'text-emerald-600' : 'text-red-600'}`}>
@@ -92,12 +108,12 @@ export function DeleteTransactionButton({ transaction }: { transaction: Transact
               </span>
             </div>
           </div>
-          
+
           <AlertDialogFooter className="mt-6 gap-3 sm:gap-3">
             <AlertDialogCancel className="flex-1 h-11">
               Cancelar
             </AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
               className="flex-1 h-11 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg shadow-red-500/25"
