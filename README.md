@@ -18,6 +18,8 @@ A paleta de cores foi cuidadosamente escolhida para transmitir confiança, cresc
 | **Verde Esmeralda Escuro**    | `#047857` (`emerald-700`)   | Hover states, gradientes                   |
 | **Verde Teal**                | `#0f766e` (`teal-700`)      | Acentos secundários                        |
 | **Verde Esmeralda Claro**     | `#10b981`                   | Destaques, sucesso                         |
+| **Azul Real**                 | `#2563eb` (`blue-600`)      | Edição, informações, filtros               |
+| **Vermelho Perigo**           | `#dc2626` (`red-600`)       | Despesas, exclusão, erros                  |
 | **Branco/Transparência**      | `rgba(255,255,255,0.1-0.9)` | Glassmorphism, overlays                    |
 
 **Gradientes Principais:**
@@ -51,6 +53,7 @@ A paleta de cores foi cuidadosamente escolhida para transmitir confiança, cresc
 - **[Shadcn/ui](https://ui.shadcn.com/)** - Componentes UI acessíveis
 - **[Framer Motion](https://www.framer.com/motion/)** `^12.23.26` - Animações
 - **[Lucide React](https://lucide.dev/)** `^0.562.0` - Ícones
+- **[Sonner](https://sonner.emilkowal.ski/)** `^1.7.2` - Notificações Toast modernas
 - **[next-themes](https://github.com/pacocoursey/next-themes)** `^0.4.6` - Tema Dark/Light
 
 ### Formulários & Validação
@@ -72,6 +75,17 @@ A paleta de cores foi cuidadosamente escolhida para transmitir confiança, cresc
 
 ---
 
+## 🚀 Deploy e Otimização
+
+### Vercel
+
+O projeto está configurado para deploy contínuo na **Vercel**.
+
+- **Variáveis de Ambiente**: Devem ser configuradas diretamente no painel da Vercel (_Settings > Environment Variables_), pois o arquivo `.env.local` é ignorado pelo Git por segurança.
+- **Otimização de Build**: Configuração de `manualChunks` no Vite para dividir bibliotecas grandes (`vendor-react`, `vendor-ui`, `vendor-utils`, etc.) em arquivos menores, evitando warnings de chunk size (>500kb) e melhorando o caching.
+
+---
+
 ## 📁 Estrutura de Pastas
 
 ```
@@ -89,10 +103,10 @@ src/
 │   ├── dashboard/
 │   │   └── components/    # SummaryCards, MonthlyExpensesChart
 │   └── transactions/
-│       ├── api/           # fetchTransactions, addTransaction, deleteTransaction
-│       ├── components/    # AddTransactionModal, EditTransactionModal,
-│       │                  # DeleteTransactionButton, DataTable, columns
-│       └── types/         # Tipos de Transaction
+│   │   ├── api/           # fetchTransactions, addTransaction, deleteTransaction
+│   │   ├── components/    # AddTransactionModal, EditTransactionModal,
+│   │   │                  # DeleteTransactionButton, DataTable, columns
+│   │   └── types/         # Tipos de Transaction
 ├── hooks/                 # Custom hooks globais
 ├── lib/                   # Configurações e utilitários
 │   ├── supabase.ts        # Cliente Supabase
@@ -121,7 +135,7 @@ public/                    # Assets públicos
 
 - **Node.js** 18+ (recomendado: 20+)
 - **npm** ou **yarn**
-- Conta no **[Supabase](https://supabase.com)**
+- **Conta no [Supabase](https://supabase.com)**
 
 ### Passo a Passo
 
@@ -255,6 +269,8 @@ npm run lint      # Executa ESLint
 - [x] **Formatação de valores** em Real (R$)
 - [x] **Correção de fuso horário** na exibição de datas
 - [x] **Seletor de tipo** com Receita como padrão e primeiro na lista
+- [x] **Notificações Toast (Sonner)**: Feedback visual personalizado por ação (Verde: Adicionar, Azul: Editar, Vermelho: Excluir)
+- [x] **Filtros Padronizados**: Filtro por Categoria e Período com layout unificado, seletores largos e ícones consistentes
 
 #### Layout & UI
 
