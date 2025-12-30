@@ -22,8 +22,8 @@ import { getLastUsedEmail, saveLastUsedEmail } from '@/lib/auth-storage'
 
 const formSchema = z.object({
   email: z.string().trim().email({ message: "Endereço de email inválido" }),
-  newPassword: z.string().min(6, { message: "A senha deve ter pelo menos 6 caracteres" }),
-  confirmPassword: z.string().min(6, { message: "A senha deve ter pelo menos 6 caracteres" }),
+  newPassword: z.string().min(8, { message: "A senha deve ter pelo menos 8 caracteres" }),
+  confirmPassword: z.string().min(8, { message: "A senha deve ter pelo menos 8 caracteres" }),
 }).refine((data) => data.newPassword === data.confirmPassword, {
   message: "As senhas não coincidem",
   path: ["confirmPassword"],
@@ -58,7 +58,7 @@ export function ForgotPasswordForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setError(null)
     setLoading(true)
-    
+
     try {
       // Update password directly using Supabase admin functionality
       // Note: This is a simplified version without email verification
@@ -80,7 +80,7 @@ export function ForgotPasswordForm() {
 
       // Save email for future use
       saveLastUsedEmail(values.email)
-      
+
       setSuccess(true)
       setTimeout(() => {
         navigate('/auth/login')
@@ -149,10 +149,10 @@ export function ForgotPasswordForm() {
                     Email
                   </FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="seu@email.com" 
-                      className="h-12 pl-4 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all" 
-                      {...field} 
+                    <Input
+                      placeholder="seu@email.com"
+                      className="h-12 pl-4 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -171,11 +171,11 @@ export function ForgotPasswordForm() {
                   </FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input 
+                      <Input
                         type={showPassword ? "text" : "password"}
-                        placeholder="••••••••" 
-                        className="h-12 pl-4 pr-12 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all" 
-                        {...field} 
+                        placeholder="Mínimo 8 caracteres"
+                        className="h-12 pl-4 pr-12 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all"
+                        {...field}
                       />
                       <button
                         type="button"
@@ -206,11 +206,11 @@ export function ForgotPasswordForm() {
                   </FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input 
+                      <Input
                         type={showConfirmPassword ? "text" : "password"}
-                        placeholder="••••••••" 
-                        className="h-12 pl-4 pr-12 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all" 
-                        {...field} 
+                        placeholder="Digite a senha novamente"
+                        className="h-12 pl-4 pr-12 border-2 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all"
+                        {...field}
                       />
                       <button
                         type="button"
@@ -229,16 +229,20 @@ export function ForgotPasswordForm() {
                 </FormItem>
               )}
             />
-            
+
+            <p className="text-xs text-muted-foreground">
+              A senha deve ter no mínimo 8 caracteres
+            </p>
+
             {error && (
               <div className="rounded-lg bg-red-50 dark:bg-red-950/30 p-4 border border-red-200 dark:border-red-800">
                 <p className="text-sm font-medium text-red-600 dark:text-red-400">{error}</p>
               </div>
             )}
-            
-            <Button 
-              type="submit" 
-              className="w-full h-12 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold shadow-lg shadow-emerald-500/25 transition-all duration-200 gap-2" 
+
+            <Button
+              type="submit"
+              className="w-full h-12 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold shadow-lg shadow-emerald-500/25 transition-all duration-200 gap-2"
               disabled={isSubmitting || loading}
             >
               {(isSubmitting || loading) ? (
@@ -264,9 +268,9 @@ export function ForgotPasswordForm() {
             </div>
 
             <Link to="/auth/login" className="block">
-              <Button 
-                type="button" 
-                variant="outline" 
+              <Button
+                type="button"
+                variant="outline"
                 className="w-full h-12 font-semibold border-2 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all duration-200 gap-2 text-emerald-700 dark:text-emerald-400"
               >
                 <ArrowLeft className="h-4 w-4" />

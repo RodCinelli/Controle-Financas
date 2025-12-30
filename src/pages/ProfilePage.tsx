@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react'
-import { 
-  User, 
-  Lock, 
-  Camera, 
-  Trash2, 
-  Eye, 
-  EyeOff, 
-  CheckCircle2, 
+import {
+  User,
+  Lock,
+  Camera,
+  Trash2,
+  Eye,
+  EyeOff,
+  CheckCircle2,
   AlertCircle,
   Mail,
   Calendar,
@@ -39,13 +39,13 @@ interface Feedback {
 
 export function ProfilePage() {
   const { user } = useAuth()
-  const { 
-    profile, 
-    loading, 
-    avatarLoading, 
-    updatePassword, 
-    uploadUserAvatar, 
-    removeAvatar 
+  const {
+    profile,
+    loading,
+    avatarLoading,
+    updatePassword,
+    uploadUserAvatar,
+    removeAvatar
   } = useProfile()
 
   // Password form state
@@ -74,8 +74,8 @@ export function ProfilePage() {
       return
     }
 
-    if (newPassword.length < 6) {
-      setPasswordFeedback({ type: 'error', message: 'A nova senha deve ter pelo menos 6 caracteres' })
+    if (newPassword.length < 8) {
+      setPasswordFeedback({ type: 'error', message: 'A nova senha deve ter pelo menos 8 caracteres' })
       return
     }
 
@@ -150,22 +150,18 @@ export function ProfilePage() {
 
   return (
     <div className="space-y-8">
-      {/* Page Header */}
       <div className="flex items-center gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 text-white shadow-lg shadow-emerald-500/25">
-          <User className="h-6 w-6" />
-        </div>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
             Meu Perfil
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground mt-1">
             Gerencie suas informações pessoais e segurança
           </p>
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 items-center">
+      <div className="flex flex-col gap-6 max-w-2xl mx-auto">
         {/* Profile Info Card */}
         <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-emerald-50/30 dark:from-card dark:to-emerald-950/10">
           <CardHeader className="pb-4">
@@ -182,18 +178,18 @@ export function ProfilePage() {
             <div className="flex flex-col items-center gap-4">
               <div className="relative group">
                 <Avatar className="h-28 w-28 border-4 border-emerald-200 dark:border-emerald-800 shadow-xl">
-                  <AvatarImage 
-                    src={profile?.avatarUrl || ''} 
-                    alt="Avatar" 
+                  <AvatarImage
+                    src={profile?.avatarUrl || ''}
+                    alt="Avatar"
                     className="object-cover"
                   />
                   <AvatarFallback className="bg-gradient-to-br from-emerald-500 to-emerald-700 text-white text-3xl font-bold">
                     {user?.email?.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                
+
                 {/* Overlay on hover */}
-                <div 
+                <div
                   className={cn(
                     "absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer",
                     avatarLoading && "opacity-100"
@@ -246,7 +242,7 @@ export function ProfilePage() {
                 <div
                   className={cn(
                     "flex items-center gap-2 text-sm px-3 py-2 rounded-lg",
-                    avatarFeedback.type === 'success' 
+                    avatarFeedback.type === 'success'
                       ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
                       : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
                   )}
@@ -266,20 +262,20 @@ export function ProfilePage() {
             </div>
 
             {/* User Info */}
-            <div className="space-y-4 pt-4 border-t">
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t">
+              <div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-muted/50 text-center">
                 <Mail className="h-5 w-5 text-emerald-600" />
                 <div>
                   <p className="text-xs text-muted-foreground">Email</p>
-                  <p className="font-medium">{profile?.email}</p>
+                  <p className="font-medium text-sm truncate max-w-[150px]" title={profile?.email}>{profile?.email}</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+              <div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-muted/50 text-center">
                 <Calendar className="h-5 w-5 text-emerald-600" />
                 <div>
                   <p className="text-xs text-muted-foreground">Membro desde</p>
-                  <p className="font-medium">
+                  <p className="font-medium text-sm">
                     {profile?.createdAt ? formatDate(profile.createdAt) : '-'}
                   </p>
                 </div>
@@ -290,7 +286,7 @@ export function ProfilePage() {
 
         {/* Password Card */}
         <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-emerald-50/30 dark:from-card dark:to-emerald-950/10 h-fit">
-          <CardHeader className="pb-4">
+          <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Shield className="h-5 w-5 text-emerald-600" />
               Segurança
@@ -299,12 +295,12 @@ export function ProfilePage() {
               Altere sua senha de acesso
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <form onSubmit={handlePasswordUpdate} className="space-y-4">
               {/* Current Password */}
               <div className="space-y-1.5">
                 <Label htmlFor="currentPassword" className="flex items-center gap-2 text-sm">
-                  <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+                  <Lock className="h-4 w-4 text-emerald-600" />
                   Senha Atual
                 </Label>
                 <div className="relative">
@@ -337,7 +333,7 @@ export function ProfilePage() {
                 {/* New Password */}
                 <div className="space-y-1.5">
                   <Label htmlFor="newPassword" className="flex items-center gap-2 text-sm">
-                    <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+                    <Lock className="h-4 w-4 text-emerald-600" />
                     Nova Senha
                   </Label>
                   <div className="relative">
@@ -346,7 +342,7 @@ export function ProfilePage() {
                       type={showNewPassword ? 'text' : 'password'}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      placeholder="Nova senha"
+                      placeholder="Mínimo 8 caracteres"
                       className="pr-10 h-9"
                     />
                     <Button
@@ -368,7 +364,7 @@ export function ProfilePage() {
                 {/* Confirm Password */}
                 <div className="space-y-1.5">
                   <Label htmlFor="confirmPassword" className="flex items-center gap-2 text-sm">
-                    <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+                    <Lock className="h-4 w-4 text-emerald-600" />
                     Confirmar
                   </Label>
                   <div className="relative">
@@ -377,7 +373,7 @@ export function ProfilePage() {
                       type={showConfirmPassword ? 'text' : 'password'}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      placeholder="Confirme a senha"
+                      placeholder="Digite a senha novamente"
                       className="pr-10 h-9"
                     />
                     <Button
@@ -398,7 +394,7 @@ export function ProfilePage() {
               </div>
 
               <p className="text-xs text-muted-foreground">
-                A senha deve ter no mínimo 6 caracteres
+                A senha deve ter no mínimo 8 caracteres
               </p>
 
               {/* Feedback and Button Row */}
@@ -408,7 +404,7 @@ export function ProfilePage() {
                   <div
                     className={cn(
                       "flex items-center gap-2 text-sm px-3 py-2 rounded-lg flex-1",
-                      passwordFeedback.type === 'success' 
+                      passwordFeedback.type === 'success'
                         ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
                         : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
                     )}
