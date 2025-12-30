@@ -6,6 +6,7 @@ import { RegisterPage } from '@/pages/RegisterPage'
 import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { TransactionsPage } from '@/pages/TransactionsPage'
+import { ChartsPage } from '@/pages/ChartsPage'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { ProtectedRoute } from '@/routes/ProtectedRoute'
 
@@ -19,13 +20,14 @@ function App() {
         <Route path="forgot-password" element={<ForgotPasswordPage />} />
       </Route>
       <Route element={<ProtectedRoute />}>
-         <Route element={<DashboardLayout />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/transactions" element={<TransactionsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-         </Route>
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/transactions" element={<TransactionsPage />} />
+          <Route path="/charts" element={<ChartsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
       </Route>
-       <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   )
 }

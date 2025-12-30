@@ -5,6 +5,7 @@ import {
   DollarSign,
   Home,
   Receipt,
+  BarChart3,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -77,6 +78,7 @@ export function DashboardLayout() {
   const navItems = [
     { href: "/dashboard", icon: Home, label: "Dashboard" },
     { href: "/transactions", icon: Receipt, label: "Transações" },
+    { href: "/charts", icon: BarChart3, label: "Gráficos" },
   ];
 
   return (
