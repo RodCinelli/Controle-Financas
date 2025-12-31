@@ -40,11 +40,11 @@ export function ChartsSummaryCards({ transactions }: ChartsSummaryCardsProps) {
                             </p>
                             <p className="text-xs text-muted-foreground">Total acumulado</p>
                         </div>
-                        <div className={`h-12 w-12 rounded-full flex items-center justify-center ${netBalance >= 0 ? 'bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900 dark:to-emerald-800' : 'bg-gradient-to-br from-red-100 to-red-200 dark:from-red-900 dark:to-red-800'}`}>
+                        <div className={`hidden sm:flex h-10 w-10 lg:h-12 lg:w-12 rounded-full items-center justify-center shrink-0 ${netBalance >= 0 ? 'bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900 dark:to-emerald-800' : 'bg-gradient-to-br from-red-100 to-red-200 dark:from-red-900 dark:to-red-800'}`}>
                             {netBalance >= 0 ? (
-                                <TrendingUp className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                                <TrendingUp className="h-5 w-5 lg:h-6 lg:w-6 text-emerald-600 dark:text-emerald-400" />
                             ) : (
-                                <TrendingDown className="h-6 w-6 text-red-600 dark:text-red-400" />
+                                <TrendingDown className="h-5 w-5 lg:h-6 lg:w-6 text-red-600 dark:text-red-400" />
                             )}
                         </div>
                     </div>
@@ -62,8 +62,8 @@ export function ChartsSummaryCards({ transactions }: ChartsSummaryCardsProps) {
                             </p>
                             <p className="text-xs text-muted-foreground">Entradas no período</p>
                         </div>
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-sky-100 to-sky-200 dark:from-sky-900 dark:to-sky-800 flex items-center justify-center">
-                            <PiggyBank className="h-6 w-6 text-sky-600 dark:text-sky-400" />
+                        <div className="hidden sm:flex h-10 w-10 lg:h-12 lg:w-12 rounded-full bg-gradient-to-br from-sky-100 to-sky-200 dark:from-sky-900 dark:to-sky-800 items-center justify-center shrink-0">
+                            <PiggyBank className="h-5 w-5 lg:h-6 lg:w-6 text-sky-600 dark:text-sky-400" />
                         </div>
                     </div>
                 </CardContent>
@@ -80,8 +80,8 @@ export function ChartsSummaryCards({ transactions }: ChartsSummaryCardsProps) {
                             </p>
                             <p className="text-xs text-muted-foreground">Do total de receitas</p>
                         </div>
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-violet-100 to-violet-200 dark:from-violet-900 dark:to-violet-800 flex items-center justify-center">
-                            <Target className="h-6 w-6 text-violet-600 dark:text-violet-400" />
+                        <div className="hidden sm:flex h-10 w-10 lg:h-12 lg:w-12 rounded-full bg-gradient-to-br from-violet-100 to-violet-200 dark:from-violet-900 dark:to-violet-800 items-center justify-center shrink-0">
+                            <Target className="h-5 w-5 lg:h-6 lg:w-6 text-violet-600 dark:text-violet-400" />
                         </div>
                     </div>
                 </CardContent>
@@ -98,12 +98,12 @@ export function ChartsSummaryCards({ transactions }: ChartsSummaryCardsProps) {
                             </p>
                             <p className="text-xs text-muted-foreground">Categorias utilizadas</p>
                         </div>
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 flex items-center justify-center">
+                        <div className="hidden sm:flex h-10 w-10 lg:h-12 lg:w-12 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 items-center justify-center shrink-0">
                             <div className="grid grid-cols-2 gap-0.5">
-                                <div className="w-2 h-2 rounded-sm bg-amber-600 dark:bg-amber-400"></div>
-                                <div className="w-2 h-2 rounded-sm bg-amber-400 dark:bg-amber-500"></div>
-                                <div className="w-2 h-2 rounded-sm bg-amber-400 dark:bg-amber-500"></div>
-                                <div className="w-2 h-2 rounded-sm bg-amber-600 dark:bg-amber-400"></div>
+                                <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-sm bg-amber-600 dark:bg-amber-400"></div>
+                                <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-sm bg-amber-400 dark:bg-amber-500"></div>
+                                <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-sm bg-amber-400 dark:bg-amber-500"></div>
+                                <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-sm bg-amber-600 dark:bg-amber-400"></div>
                             </div>
                         </div>
                     </div>

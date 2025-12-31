@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts'
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import type { Transaction } from '@/features/transactions/types'
 
@@ -136,14 +136,14 @@ export function CategoryPieChart({ transactions, type = 'expense' }: CategoryPie
             </CardHeader>
             <CardContent>
                 <div className="flex flex-col items-center gap-4">
-                    <ResponsiveContainer width="100%" height={250}>
+                    <ResponsiveContainer width="100%" height={220}>
                         <PieChart>
                             <Pie
                                 data={data}
                                 cx="50%"
                                 cy="50%"
-                                innerRadius={60}
-                                outerRadius={100}
+                                innerRadius={50}
+                                outerRadius={85}
                                 paddingAngle={3}
                                 dataKey="value"
                                 animationBegin={0}
@@ -166,28 +166,33 @@ export function CategoryPieChart({ transactions, type = 'expense' }: CategoryPie
                                     boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
                                 }}
                             />
-                            <Legend
-                                layout="vertical"
-                                align="right"
-                                verticalAlign="middle"
-                                wrapperStyle={{ paddingLeft: '20px' }}
-                                formatter={(value) => {
-                                    const item = data.find(d => d.name === value)
-                                    return (
-                                        <span className="text-sm">
-                                            {value} <span className="text-muted-foreground">({item?.percentage.toFixed(1)}%)</span>
-                                        </span>
-                                    )
-                                }}
-                            />
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
+
+                {/* Legenda customizada abaixo do gráfico */}
+                <div className="mt-4 pt-4 border-t">
+                    <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+                        {data.map((item, index) => (
+                            <div key={item.name} className="flex items-center gap-1.5">
+                                <div
+                                    className="w-3 h-3 rounded-full shrink-0"
+                                    style={{ backgroundColor: colors[index % colors.length] }}
+                                />
+                                <span className="text-xs sm:text-sm">
+                                    {item.name}
+                                    <span className="text-muted-foreground ml-1">({item.percentage.toFixed(1)}%)</span>
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
                 {/* Total */}
                 <div className="mt-4 pt-4 border-t flex justify-center">
                     <div className="text-center">
                         <p className="text-sm text-muted-foreground">Total</p>
-                        <p className={`text-2xl font-bold ${type === 'expense' ? 'text-red-600 dark:text-red-400' : type === 'income' ? 'text-emerald-600 dark:text-emerald-400' : 'text-blue-600 dark:text-blue-400'}`}>
+                        <p className={`text-xl sm:text-2xl font-bold ${type === 'expense' ? 'text-red-600 dark:text-red-400' : type === 'income' ? 'text-emerald-600 dark:text-emerald-400' : 'text-blue-600 dark:text-blue-400'}`}>
                             {formatCurrency(totalValue)}
                         </p>
                     </div>
