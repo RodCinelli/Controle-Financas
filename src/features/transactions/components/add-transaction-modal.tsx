@@ -128,7 +128,7 @@ export function AddTransactionModal() {
                     <span className="sm:hidden">Adicionar</span>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[520px] p-0 flex flex-col">
+            <DialogContent className="sm:max-w-[520px] p-0">
                 <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 p-6 text-white">
                     <DialogHeader>
                         <DialogTitle className="text-2xl font-bold text-white flex items-center gap-2">
@@ -142,7 +142,7 @@ export function AddTransactionModal() {
                         </DialogDescription>
                     </DialogHeader>
                 </div>
-                <div className="p-4 sm:p-6 overflow-y-auto flex-1">
+                <div className="p-4 sm:p-6">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
                             <FormField

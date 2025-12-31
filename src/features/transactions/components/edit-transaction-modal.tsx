@@ -121,7 +121,7 @@ export function EditTransactionModal({ transaction, open, onOpenChange }: EditTr
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[520px] p-0 flex flex-col">
+            <DialogContent className="sm:max-w-[520px] p-0">
                 <div className={`p-6 text-white ${transaction.type === 'income'
                     ? 'bg-gradient-to-r from-emerald-600 to-emerald-700'
                     : 'bg-gradient-to-r from-red-500 to-red-600'
@@ -138,7 +138,7 @@ export function EditTransactionModal({ transaction, open, onOpenChange }: EditTr
                         </DialogDescription>
                     </DialogHeader>
                 </div>
-                <div className="p-4 sm:p-6 overflow-y-auto flex-1">
+                <div className="p-4 sm:p-6">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
                             <FormField

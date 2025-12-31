@@ -290,8 +290,8 @@ npm run lint      # Executa ESLint
 - [x] **Formulários de autenticação**: Padding e títulos responsivos, painel lateral escondido em mobile
 - [x] **Dashboard**: Grid de cards adaptável (1→2→3 colunas), gráficos com altura otimizada
 - [x] **Transações**: Header empilhado, filtros em coluna, tabela com scroll horizontal, paginação simplificada
-- [x] **Modais**: Max-height com scroll, campos em coluna única, botões full-width
-- [x] **Gráficos**: Alturas reduzidas, legendas abaixo do gráfico, tooltips adaptados
+- [x] **Modais**: Scroll suave com `max-h-[90dvh] overscroll-contain`, campos em coluna única
+- [x] **Gráficos**: Ícones ocultos em mobile, legendas customizadas abaixo do gráfico
 - [x] **Perfil**: Info cards em coluna única, campos de senha empilhados
 
 #### Perfil do Usuário
@@ -361,9 +361,18 @@ A aplicação foi otimizada para oferecer uma experiência excepcional em dispos
 |--------|-------------------|
 | **Login/Registro** | Painel lateral escondido, form centralizado full-width |
 | **Dashboard** | Cards 1→2→3 colunas, gráfico 280px altura |
-| **Transações** | Tabela com scroll horizontal, filtros empilhados |
-| **Gráficos** | Cards 2x2, legendas abaixo, altura 250-280px |
+| **Transações** | Tabela com scroll horizontal, filtros empilhados, modais com scroll suave |
+| **Gráficos** | Cards 2x2 (ícones ocultos em mobile), legendas customizadas abaixo |
 | **Perfil** | Info cards em 1 coluna, grid responsivo |
+
+### Componentes Otimizados
+
+| Componente | Otimizações |
+|------------|-------------|
+| **Dialog** | `max-h-[90dvh] overflow-y-auto overscroll-contain` para scroll consistente |
+| **ChartsSummaryCards** | Ícones `hidden sm:flex` para não comprimir conteúdo em mobile |
+| **CategoryPieChart** | Legenda customizada com `flex-wrap` posicionada abaixo do gráfico |
+| **DataTable** | `overflow-x-auto` para scroll horizontal, paginação simplificada |
 
 ---
 
