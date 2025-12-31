@@ -278,11 +278,21 @@ npm run lint      # Executa ESLint
 - [x] **Tooltips** para itens da sidebar quando recolhida
 - [x] **Logo centralizado** no header (`$` DollarSign)
 - [x] **Tema Dark/Light** persistente
-- [x] **Design responsivo** (Mobile-first)
+- [x] **Design responsivo** (Mobile-first) com otimizações específicas por página
 - [x] **Botão de fechar (X)** estilizado nos modais
 - [x] **Animações suaves** e transições
 - [x] **Footer fixo** alinhado com a sidebar ("Desenvolvido por Rodrigo Cinelli")
 - [x] **Espaçamento vertical consistente** (32px) entre header/conteúdo e conteúdo/footer
+
+#### Responsividade Mobile
+
+- [x] **Breakpoints padronizados**: Base (<640px), sm (≥640px), md (≥768px), lg (≥1024px)
+- [x] **Formulários de autenticação**: Padding e títulos responsivos, painel lateral escondido em mobile
+- [x] **Dashboard**: Grid de cards adaptável (1→2→3 colunas), gráficos com altura otimizada
+- [x] **Transações**: Header empilhado, filtros em coluna, tabela com scroll horizontal, paginação simplificada
+- [x] **Modais**: Max-height com scroll, campos em coluna única, botões full-width
+- [x] **Gráficos**: Alturas reduzidas, legendas abaixo do gráfico, tooltips adaptados
+- [x] **Perfil**: Info cards em coluna única, campos de senha empilhados
 
 #### Perfil do Usuário
 
@@ -329,6 +339,31 @@ Componentes disponíveis em `src/components/ui/`:
 - **Hooks**: camelCase com prefixo `use` (`useAuth.tsx`)
 - **Utilitários**: camelCase (`utils.ts`)
 - **Tipos**: PascalCase com sufixo `Type` ou interface (`AuthContextType`)
+
+---
+
+## 📱 Responsividade Mobile
+
+A aplicação foi otimizada para oferecer uma experiência excepcional em dispositivos móveis:
+
+### Breakpoints
+
+| Breakpoint | Largura | Comportamento |
+|------------|---------|---------------|
+| Base | < 640px | Layout de 1 coluna, elementos empilhados |
+| `sm` | ≥ 640px | Layout de 2 colunas, elementos lado a lado |
+| `md` | ≥ 768px | Layout expandido para tablets |
+| `lg` | ≥ 1024px | Layout desktop completo (3-4 colunas) |
+
+### Otimizações por Página
+
+| Página | Otimizações Mobile |
+|--------|-------------------|
+| **Login/Registro** | Painel lateral escondido, form centralizado full-width |
+| **Dashboard** | Cards 1→2→3 colunas, gráfico 280px altura |
+| **Transações** | Tabela com scroll horizontal, filtros empilhados |
+| **Gráficos** | Cards 2x2, legendas abaixo, altura 250-280px |
+| **Perfil** | Info cards em 1 coluna, grid responsivo |
 
 ---
 

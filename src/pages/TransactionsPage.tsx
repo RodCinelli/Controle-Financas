@@ -54,27 +54,27 @@ export function TransactionsPage() {
     if (error) return <div className="text-center text-destructive">Erro ao carregar transações</div>
 
     return (
-        <div className="space-y-6">
-            <div className="flex items-center justify-between">
+        <div className="space-y-4 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">Transações</h2>
+                    <h2 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">Transações</h2>
                     <p className="text-muted-foreground mt-1">Gerencie suas receitas e despesas</p>
                 </div>
                 <AddTransactionModal />
             </div>
 
             {/* Category Filter */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <div className="flex items-center gap-2">
                     <Tag className="h-4 w-4 text-emerald-600" />
                     <span className="text-sm font-medium text-muted-foreground">Filtrar por categoria:</span>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                     <Select
                         value={currentCategoryFilter || 'all'}
                         onValueChange={handleCategoryChange}
                     >
-                        <SelectTrigger className="w-[200px] h-9 bg-white dark:bg-background border-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <SelectTrigger className="w-full sm:w-[200px] h-9 bg-white dark:bg-background border-2 focus:ring-emerald-500 focus:border-emerald-500">
                             <SelectValue placeholder="Todas as categorias" />
                         </SelectTrigger>
                         <SelectContent>
@@ -91,7 +91,7 @@ export function TransactionsPage() {
                         </SelectContent>
                     </Select>
                     {currentCategoryFilter && (
-                        <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
+                        <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium hidden sm:inline">
                             Mostrando: {currentCategoryFilter}
                         </span>
                     )}

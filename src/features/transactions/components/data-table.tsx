@@ -44,10 +44,10 @@ function getRowType(row: unknown): 'income' | 'expense' | null {
 
 // Check if row is a Transaction
 function isTransaction(row: unknown): row is Transaction {
-  return row !== null && 
-    typeof row === 'object' && 
-    'id' in row && 
-    'type' in row && 
+  return row !== null &&
+    typeof row === 'object' &&
+    'id' in row &&
+    'type' in row &&
     'amount' in row
 }
 
@@ -59,7 +59,7 @@ export function DataTable<TData, TValue>({
   pageSize = 8,
 }: DataTableProps<TData, TValue>) {
   "use no memo"
-  
+
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [internalFilters, setInternalFilters] = useState<ColumnFiltersState>(columnFilters)
@@ -98,7 +98,7 @@ export function DataTable<TData, TValue>({
     if (target.closest('button') || target.closest('[role="dialog"]')) {
       return
     }
-    
+
     if (isTransaction(row)) {
       setSelectedTransaction(row)
       setEditModalOpen(true)
@@ -112,72 +112,74 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <Card className="border-2 shadow-lg overflow-hidden">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="bg-muted/50 hover:bg-muted/50">
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id} className="font-semibold text-foreground">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id} className="bg-muted/50 hover:bg-muted/50">
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id} className="font-semibold text-foreground">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
                             header.column.columnDef.header,
                             header.getContext()
                           )}
-                    </TableHead>
+                      </TableHead>
+                    )
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => {
+                  const rowType = getRowType(row.original)
+                  const hoverClass = rowType === 'income'
+                    ? 'hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+                    : rowType === 'expense'
+                      ? 'hover:bg-red-50 dark:hover:bg-red-950/30'
+                      : 'hover:bg-muted/50'
+
+                  return (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                      className={`transition-colors cursor-pointer ${hoverClass}`}
+                      onClick={(e) => handleRowClick(row.original, e)}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id} className="py-4">
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </TableCell>
+                      ))}
+                    </TableRow>
                   )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => {
-                const rowType = getRowType(row.original)
-                const hoverClass = rowType === 'income' 
-                  ? 'hover:bg-emerald-50 dark:hover:bg-emerald-950/30' 
-                  : rowType === 'expense'
-                  ? 'hover:bg-red-50 dark:hover:bg-red-950/30'
-                  : 'hover:bg-muted/50'
-                
-                return (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                    className={`transition-colors cursor-pointer ${hoverClass}`}
-                    onClick={(e) => handleRowClick(row.original, e)}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="py-4">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                )
-              })
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-48 text-center">
-                  <div className="flex flex-col items-center justify-center gap-3 text-muted-foreground">
-                    <div className="h-16 w-16 rounded-full bg-muted/50 flex items-center justify-center">
-                      <Receipt className="h-8 w-8" />
+                })
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-48 text-center">
+                    <div className="flex flex-col items-center justify-center gap-3 text-muted-foreground">
+                      <div className="h-16 w-16 rounded-full bg-muted/50 flex items-center justify-center">
+                        <Receipt className="h-8 w-8" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Nenhuma transação encontrada</p>
+                        <p className="text-sm">Adicione sua primeira transação para começar</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium text-foreground">Nenhuma transação encontrada</p>
-                      <p className="text-sm">Adicione sua primeira transação para começar</p>
-                    </div>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-        
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+
         {/* Pagination Controls */}
         {totalRows > pageSize && (
-          <div className="flex items-center justify-between px-4 py-3 border-t bg-muted/30">
-            <div className="text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 border-t bg-muted/30">
+            <div className="text-sm text-muted-foreground hidden sm:block">
               Mostrando{" "}
               <span className="font-medium text-foreground">
                 {pagination.pageIndex * pageSize + 1}
@@ -190,7 +192,7 @@ export function DataTable<TData, TValue>({
               <span className="font-medium text-foreground">{totalRows}</span>
               {" "}transações
             </div>
-            
+
             <div className="flex items-center gap-1">
               {/* First Page */}
               <Button
@@ -203,7 +205,7 @@ export function DataTable<TData, TValue>({
                 <ChevronsLeft className="h-4 w-4" />
                 <span className="sr-only">Primeira página</span>
               </Button>
-              
+
               {/* Previous Page */}
               <Button
                 variant="ghost"
@@ -215,33 +217,33 @@ export function DataTable<TData, TValue>({
                 <ChevronLeft className="h-4 w-4" />
                 <span className="sr-only">Página anterior</span>
               </Button>
-              
-              {/* Page Numbers */}
-              <div className="flex items-center gap-1 mx-2">
+
+              {/* Page Numbers - Hidden on mobile */}
+              <div className="hidden sm:flex items-center gap-1 mx-2">
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
                   // Show first, last, current, and adjacent pages
-                  const showPage = 
-                    page === 1 || 
-                    page === totalPages || 
+                  const showPage =
+                    page === 1 ||
+                    page === totalPages ||
                     Math.abs(page - currentPage) <= 1
-                  
-                  const showEllipsis = 
+
+                  const showEllipsis =
                     (page === 2 && currentPage > 3) ||
                     (page === totalPages - 1 && currentPage < totalPages - 2)
-                  
+
                   if (showEllipsis && !showPage) {
                     return (
-                      <span 
-                        key={page} 
+                      <span
+                        key={page}
                         className="px-1 text-muted-foreground"
                       >
                         ...
                       </span>
                     )
                   }
-                  
+
                   if (!showPage) return null
-                  
+
                   return (
                     <Button
                       key={page}
@@ -259,7 +261,7 @@ export function DataTable<TData, TValue>({
                   )
                 })}
               </div>
-              
+
               {/* Next Page */}
               <Button
                 variant="ghost"
@@ -271,7 +273,7 @@ export function DataTable<TData, TValue>({
                 <ChevronRight className="h-4 w-4" />
                 <span className="sr-only">Próxima página</span>
               </Button>
-              
+
               {/* Last Page */}
               <Button
                 variant="ghost"

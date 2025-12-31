@@ -18,7 +18,7 @@ export function DashboardPage() {
     return (
         <div className="space-y-8">
             <div>
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">Dashboard</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">Dashboard</h2>
                 <p className="text-muted-foreground mt-1">Visão geral das suas finanças</p>
             </div>
             <SummaryCards transactions={safeTransactions} />

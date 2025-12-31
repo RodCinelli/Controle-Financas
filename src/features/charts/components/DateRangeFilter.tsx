@@ -88,7 +88,7 @@ export function DateRangeFilter({ onFilterChange }: DateRangeFilterProps) {
     const isFiltered = filterType !== 'all'
 
     return (
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             {/* Ícone e Label */}
             <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-emerald-600" />
@@ -98,10 +98,10 @@ export function DateRangeFilter({ onFilterChange }: DateRangeFilterProps) {
             </div>
 
             {/* Filtros */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                 {/* Seletor de Tipo de Filtro */}
                 <Select value={filterType} onValueChange={handleFilterTypeChange}>
-                    <SelectTrigger className="w-[200px] h-9 text-sm bg-white dark:bg-background border-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    <SelectTrigger className="w-full sm:w-[200px] h-9 text-sm bg-white dark:bg-background border-2 focus:ring-emerald-500 focus:border-emerald-500">
                         <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
@@ -128,7 +128,7 @@ export function DateRangeFilter({ onFilterChange }: DateRangeFilterProps) {
                             value={format(selectedMonth, 'yyyy-MM')}
                             onValueChange={handleMonthChange}
                         >
-                            <SelectTrigger className="w-[200px] h-9 text-sm bg-white dark:bg-background border-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <SelectTrigger className="w-full sm:w-[200px] h-9 text-sm bg-white dark:bg-background border-2 focus:ring-emerald-500 focus:border-emerald-500">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>

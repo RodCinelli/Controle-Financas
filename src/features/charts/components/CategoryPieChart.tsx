@@ -114,7 +114,7 @@ export function CategoryPieChart({ transactions, type = 'expense' }: CategoryPie
         return (
             <Card className="border-2 shadow-lg">
                 <CardHeader>
-                    <CardTitle className="text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
+                    <CardTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
                         {title}
                     </CardTitle>
                     <CardDescription>{description}</CardDescription>
@@ -135,8 +135,8 @@ export function CategoryPieChart({ transactions, type = 'expense' }: CategoryPie
                 <CardDescription>{description}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="flex flex-col lg:flex-row items-center gap-4">
-                    <ResponsiveContainer width="100%" height={300}>
+                <div className="flex flex-col items-center gap-4">
+                    <ResponsiveContainer width="100%" height={250}>
                         <PieChart>
                             <Pie
                                 data={data}

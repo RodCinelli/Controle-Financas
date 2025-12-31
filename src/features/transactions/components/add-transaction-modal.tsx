@@ -122,12 +122,13 @@ export function AddTransactionModal() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 shadow-lg shadow-emerald-500/25 gap-2">
+                <Button className="w-full sm:w-auto bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 shadow-lg shadow-emerald-500/25 gap-2">
                     <Plus className="h-4 w-4" />
-                    Adicionar Transação
+                    <span className="hidden sm:inline">Adicionar Transação</span>
+                    <span className="sm:hidden">Adicionar</span>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[520px] p-0 overflow-hidden">
+            <DialogContent className="sm:max-w-[520px] max-h-[90vh] overflow-y-auto p-0">
                 <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 p-6 text-white">
                     <DialogHeader>
                         <DialogTitle className="text-2xl font-bold text-white flex items-center gap-2">
@@ -141,9 +142,9 @@ export function AddTransactionModal() {
                         </DialogDescription>
                     </DialogHeader>
                 </div>
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
                             <FormField
                                 control={form.control}
                                 name="description"
@@ -160,7 +161,7 @@ export function AddTransactionModal() {
                                     </FormItem>
                                 )}
                             />
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <FormField
                                     control={form.control}
                                     name="amount"

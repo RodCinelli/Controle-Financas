@@ -121,7 +121,7 @@ export function EditTransactionModal({ transaction, open, onOpenChange }: EditTr
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[520px] p-0 overflow-hidden">
+            <DialogContent className="sm:max-w-[520px] max-h-[90vh] overflow-y-auto p-0">
                 <div className={`p-6 text-white ${transaction.type === 'income'
                     ? 'bg-gradient-to-r from-emerald-600 to-emerald-700'
                     : 'bg-gradient-to-r from-red-500 to-red-600'
@@ -138,9 +138,9 @@ export function EditTransactionModal({ transaction, open, onOpenChange }: EditTr
                         </DialogDescription>
                     </DialogHeader>
                 </div>
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
                             <FormField
                                 control={form.control}
                                 name="description"
@@ -157,7 +157,7 @@ export function EditTransactionModal({ transaction, open, onOpenChange }: EditTr
                                     </FormItem>
                                 )}
                             />
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <FormField
                                     control={form.control}
                                     name="amount"
