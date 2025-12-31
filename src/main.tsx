@@ -13,16 +13,20 @@ import { ThemeProvider } from "@/components/common/theme-provider"
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <App />
             <Toaster
-              theme="dark"
+              theme="light"
               position="bottom-right"
               toastOptions={{
                 duration: 4000,
+                classNames: {
+                  description: "!text-white opacity-90",
+                  toast: "border-none",
+                },
               }}
             />
           </AuthProvider>
