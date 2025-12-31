@@ -287,7 +287,7 @@ export function EditTransactionModal({ transaction, open, onOpenChange }: EditTr
                                 )}
                             />
 
-                            <DialogFooter className="pt-4 border-t">
+                            <DialogFooter className="pt-4 border-t gap-3">
                                 <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
                                     Cancelar
                                 </Button>

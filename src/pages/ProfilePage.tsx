@@ -422,7 +422,7 @@ export function ProfilePage() {
                 <Button
                   type="submit"
                   className={cn(
-                    "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-lg shadow-emerald-500/25",
+                    "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-lg shadow-emerald-500/25 w-full sm:w-auto",
                     !passwordFeedback && "sm:ml-auto"
                   )}
                   disabled={passwordLoading}
