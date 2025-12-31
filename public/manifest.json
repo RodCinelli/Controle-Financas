@@ -1,0 +1,29 @@
+{
+    "name": "Controle Financeiro",
+    "short_name": "Finanças",
+    "description": "Aplicação para controle financeiro pessoal",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#059669",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/carteira.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/carteira-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/carteira-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

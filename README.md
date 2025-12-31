@@ -84,6 +84,37 @@ O projeto está configurado para deploy contínuo na **Vercel**.
 - **Variáveis de Ambiente**: Devem ser configuradas diretamente no painel da Vercel (_Settings > Environment Variables_), pois o arquivo `.env.local` é ignorado pelo Git por segurança.
 - **Otimização de Build**: Configuração de `manualChunks` no Vite para dividir bibliotecas grandes (`vendor-react`, `vendor-ui`, `vendor-utils`, etc.) em arquivos menores, evitando warnings de chunk size (>500kb) e melhorando o caching.
 
+### PWA (Progressive Web App)
+
+O aplicativo suporta instalação como app nativo através da opção **"Adicionar à Tela Inicial"** em dispositivos móveis:
+
+#### Configuração
+
+| Arquivo | Descrição |
+|---------|-----------|
+| `index.html` | Meta tags para PWA e Apple Touch Icon |
+| `public/manifest.json` | Configuração do Web App Manifest |
+| `public/carteira.ico` | Favicon para navegadores desktop |
+| `public/carteira-192.png` | Ícone 192x192 para iOS e Android |
+| `public/carteira-512.png` | Ícone 512x512 para splash screen Android |
+
+#### Suporte por Plataforma
+
+| Plataforma | Tecnologia | Ícone Utilizado |
+|------------|------------|-----------------|
+| **iOS (Safari)** | Apple Touch Icon | `carteira-192.png` |
+| **Android (Chrome)** | Web App Manifest | `carteira-192.png` / `carteira-512.png` |
+| **Desktop** | Favicon | `carteira.ico` |
+
+#### Meta Tags PWA
+
+```html
+<meta name="theme-color" content="#059669" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Finanças" />
+<link rel="manifest" href="/manifest.json" />
+```
+
 ---
 
 ## 📁 Estrutura de Pastas
