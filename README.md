@@ -84,6 +84,28 @@ O projeto está configurado para deploy contínuo na **Vercel**.
 - **Variáveis de Ambiente**: Devem ser configuradas diretamente no painel da Vercel (_Settings > Environment Variables_), pois o arquivo `.env.local` é ignorado pelo Git por segurança.
 - **Otimização de Build**: Configuração de `manualChunks` no Vite para dividir bibliotecas grandes (`vendor-react`, `vendor-ui`, `vendor-utils`, etc.) em arquivos menores, evitando warnings de chunk size (>500kb) e melhorando o caching.
 
+### SPA Routing (Single Page Application)
+
+Para que o roteamento client-side funcione corretamente em produção (evitando erro 404 ao atualizar páginas como `/dashboard` ou `/transactions`), o projeto utiliza um arquivo `vercel.json` com configuração de **rewrites**:
+
+```json
+{
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+```
+
+**O que faz:**
+- Redireciona todas as rotas (exceto `/api/*`) para o `index.html`
+- Permite que o React Router gerencie o roteamento no navegador
+- Resolve o erro 404 ao acessar diretamente URLs ou atualizar páginas
+
+> **Importante:** Sem essa configuração, a Vercel procura arquivos físicos para cada rota (ex: `/dashboard/index.html`), que não existem em SPAs.
+
 ### PWA (Progressive Web App)
 
 O aplicativo suporta instalação como app nativo através da opção **"Adicionar à Tela Inicial"** em dispositivos móveis:
