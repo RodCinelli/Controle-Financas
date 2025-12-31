@@ -277,7 +277,7 @@ export function BalanceEvolutionChart({ transactions }: BalanceEvolutionChartPro
         return (
             <Card className="border-2 shadow-lg">
                 <CardHeader>
-                    <CardTitle className="text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
+                    <CardTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
                         Evolução do Saldo
                     </CardTitle>
                     <CardDescription>Acompanhe a evolução do seu saldo ao longo do tempo</CardDescription>
@@ -294,12 +294,12 @@ export function BalanceEvolutionChart({ transactions }: BalanceEvolutionChartPro
             <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                        <CardTitle className="text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
+                        <CardTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
                             Evolução do Saldo
                         </CardTitle>
                         <CardDescription>
                             Acompanhe a evolução do seu saldo ao longo do tempo
-                            <span className="ml-2 text-emerald-600 font-medium">
+                            <span className="ml-2 text-emerald-600 font-medium hidden sm:inline">
                                 • Passe o mouse para ver detalhes
                             </span>
                         </CardDescription>
@@ -324,8 +324,8 @@ export function BalanceEvolutionChart({ transactions }: BalanceEvolutionChartPro
                     </div>
                 </div>
             </CardHeader>
-            <CardContent className="pl-2">
-                <ResponsiveContainer width="100%" height={350}>
+            <CardContent className="pl-0 sm:pl-2">
+                <ResponsiveContainer width="100%" height={280}>
                     <AreaChart data={data}>
                         <defs>
                             <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">

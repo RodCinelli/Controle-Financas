@@ -6,11 +6,11 @@ export function SummaryCards({ transactions }: { transactions: Transaction[] }) 
     const income = transactions
         .filter(t => t.type === 'income')
         .reduce((acc, t) => acc + Number(t.amount), 0)
-    
+
     const expense = transactions
         .filter(t => t.type === 'expense')
         .reduce((acc, t) => acc + Number(t.amount), 0)
-    
+
     const balance = income - expense
 
     const formatCurrency = (value: number) => {
@@ -21,7 +21,7 @@ export function SummaryCards({ transactions }: { transactions: Transaction[] }) 
     }
 
     return (
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {/* Saldo Total */}
             <Card className="border-2 hover:shadow-lg transition-shadow">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -31,7 +31,7 @@ export function SummaryCards({ transactions }: { transactions: Transaction[] }) 
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className={`text-3xl font-bold ${balance >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
+                    <div className={`text-2xl sm:text-3xl font-bold ${balance >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
                         {formatCurrency(balance)}
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">
@@ -49,7 +49,7 @@ export function SummaryCards({ transactions }: { transactions: Transaction[] }) 
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                    <div className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
                         {formatCurrency(income)}
                     </div>
                     <p className="text-xs text-emerald-600/70 dark:text-emerald-400/70 mt-1">
@@ -67,7 +67,7 @@ export function SummaryCards({ transactions }: { transactions: Transaction[] }) 
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-3xl font-bold text-red-600 dark:text-red-400">
+                    <div className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400">
                         {formatCurrency(expense)}
                     </div>
                     <p className="text-xs text-red-600/70 dark:text-red-400/70 mt-1">

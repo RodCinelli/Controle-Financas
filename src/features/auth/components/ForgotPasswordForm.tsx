@@ -96,7 +96,7 @@ export function ForgotPasswordForm() {
 
   if (success) {
     return (
-      <Card className="w-full border-0 shadow-2xl">
+      <Card className="w-full border-0 shadow-2xl overflow-hidden">
         <CardContent className="pt-8 pb-8">
           <div className="flex flex-col items-center justify-center gap-4 text-center">
             <div className="h-16 w-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
@@ -116,16 +116,16 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <Card className="w-full border-0 shadow-2xl">
-      <CardHeader className="space-y-2 pb-8">
-        <CardTitle className="text-3xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
+    <Card className="w-full border-0 shadow-2xl overflow-hidden">
+      <CardHeader className="space-y-2 pb-6 sm:pb-8 px-4 sm:px-6">
+        <CardTitle className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
           Recuperar acesso
         </CardTitle>
         <CardDescription className="text-base text-muted-foreground">
           Redefina sua senha para acessar sua conta
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 sm:px-6 pb-6 sm:pb-8">
         {/* Last used email info */}
         {lastEmail && (
           <div className="mb-6 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 p-4 border border-emerald-200 dark:border-emerald-800">

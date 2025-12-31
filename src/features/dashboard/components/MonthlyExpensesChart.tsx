@@ -24,12 +24,12 @@ export function MonthlyExpensesChart({ transactions }: { transactions: Transacti
     transactions.forEach(t => {
         let date: Date
         try {
-             const parts = t.date.split('-')
-             date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
+            const parts = t.date.split('-')
+            date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
         } catch {
-             date = new Date()
+            date = new Date()
         }
-        
+
         const monthKey = format(date, 'MMM yyyy', { locale: ptBR })
 
         if (!dataMap.has(monthKey)) {
@@ -47,7 +47,7 @@ export function MonthlyExpensesChart({ transactions }: { transactions: Transacti
     return (
         <Card className="w-full border-2 shadow-lg">
             <CardHeader>
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
+                <CardTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
                     Visão Geral Mensal
                 </CardTitle>
                 <CardDescription>
@@ -55,9 +55,9 @@ export function MonthlyExpensesChart({ transactions }: { transactions: Transacti
                 </CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-                <ResponsiveContainer width="100%" height={317}>
+                <ResponsiveContainer width="100%" height={280}>
                     <BarChart data={data}>
-                         <CartesianGrid strokeDasharray="3 3" vertical={false} className="stroke-muted" />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} className="stroke-muted" />
                         <XAxis
                             dataKey="name"
                             stroke="hsl(var(--muted-foreground))"
@@ -72,7 +72,7 @@ export function MonthlyExpensesChart({ transactions }: { transactions: Transacti
                             axisLine={false}
                             tickFormatter={(value) => `R$${value}`}
                         />
-                        <Tooltip 
+                        <Tooltip
                             formatter={(value: number | undefined) => {
                                 if (value === undefined) return ""
                                 return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value)
@@ -87,17 +87,17 @@ export function MonthlyExpensesChart({ transactions }: { transactions: Transacti
                             itemSorter={(item) => item.dataKey === 'income' ? -1 : 1}
                         />
                         <Legend content={<CustomLegend />} />
-                        <Bar 
-                            dataKey="income" 
-                            fill="hsl(142.1 76.2% 36.3%)" 
-                            radius={[8, 8, 0, 0]} 
+                        <Bar
+                            dataKey="income"
+                            fill="hsl(142.1 76.2% 36.3%)"
+                            radius={[8, 8, 0, 0]}
                             name="Receitas"
                             className="drop-shadow-sm"
                         />
-                        <Bar 
-                            dataKey="expense" 
-                            fill="hsl(0 84.2% 60.2%)" 
-                            radius={[8, 8, 0, 0]} 
+                        <Bar
+                            dataKey="expense"
+                            fill="hsl(0 84.2% 60.2%)"
+                            radius={[8, 8, 0, 0]}
                             name="Despesas"
                             className="drop-shadow-sm"
                         />

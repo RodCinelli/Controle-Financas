@@ -152,7 +152,7 @@ export function ProfilePage() {
     <div className="space-y-8">
       <div className="flex items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
             Meu Perfil
           </h1>
           <p className="text-muted-foreground mt-1">
@@ -262,7 +262,7 @@ export function ProfilePage() {
             </div>
 
             {/* User Info */}
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-4 border-t">
               <div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-muted/50 text-center">
                 <Mail className="h-5 w-5 text-emerald-600" />
                 <div>

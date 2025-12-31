@@ -57,16 +57,16 @@ export function RegisterForm() {
   const isSubmitting = form.formState.isSubmitting
 
   return (
-    <Card className="w-full border-0 shadow-2xl">
-      <CardHeader className="space-y-2 pb-8">
-        <CardTitle className="text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-emerald-800 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
+    <Card className="w-full border-0 shadow-2xl overflow-hidden">
+      <CardHeader className="space-y-2 pb-6 sm:pb-8 px-4 sm:px-6">
+        <CardTitle className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-emerald-800 dark:from-emerald-400 dark:to-emerald-200 bg-clip-text text-transparent">
           Crie sua conta
         </CardTitle>
         <CardDescription className="text-base text-muted-foreground">
           Comece a controlar suas finanças agora mesmo
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 sm:px-6 pb-6 sm:pb-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField

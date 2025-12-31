@@ -28,7 +28,7 @@ export function ChartsSummaryCards({ transactions }: ChartsSummaryCardsProps) {
     }
 
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
             {/* Lucro Líquido Total */}
             <Card className="border-2 hover:shadow-lg transition-shadow">
                 <CardContent className="p-4">
